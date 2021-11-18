@@ -33,8 +33,10 @@ class Player(pygame.sprite.Sprite):
         
         self.image = pygame.Surface([self.width, self.height])
         #^creating a rectangle in place of the sprite image right now which is 32x32
-        self.image.fill(GOLD)
+        # self.image.fill(GOLD)
         #^filling in the rectangle
+        #added in the image so need to load it
+        self.image.blit(image_to_load, (0,0)) #second params - position of where to load it to - top left corner of the surface
 
         self.rect = self.image.get_rect()
         #^every sprite in pygame has an image and a rect; rect is the position and how big it is/image.get_rect() - makes sure its the same size as the image
