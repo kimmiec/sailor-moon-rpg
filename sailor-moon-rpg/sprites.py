@@ -1,4 +1,5 @@
 import pygame
+from pygame.sprite import spritecollide
 from config import *
 import math
 import random
@@ -31,8 +32,8 @@ class Player(pygame.sprite.Sprite):
         # ^ passed in x into the function and multiply with the tilesize 
         self.y = y * TILESIZE
         self.width = TILESIZE
-        self.height = TILESIZE
-        self.height_two = HEIGHTSIZE
+        # self.height = TILESIZE
+        self.height = HEIGHTSIZE
 
         self.x_change = 0
         self.y_change = 0
@@ -41,11 +42,14 @@ class Player(pygame.sprite.Sprite):
         self.facing = 'down'
         #^for when we add in animation, want to know what direction the player is facing; have it face down by default
 
+        # animation loop
+        self.animation_loop = 1
+
         #add in image/load in img
         # image_to_load = pygame.image.load("./imgs/single.png")
         # take this away ^ bc we wrote a class to load in the imgs without slowing the game down
         
-        self.image = self.game.character_spritesheet.get_sprite(85, 8, self.width, self.height_two)
+        self.image = self.game.character_spritesheet.get_sprite(85, 8, self.width, self.height)
         # referring to the sprite sheet and the method inside the class spritesheet
         # 32 & 40 are the width and height which we had already set as self.width and self.height but bc my image is a rectangle rather than a square, i needed to put in numbers to figure out where and how long i needed it to be but can add another variable for it =]
 
@@ -65,9 +69,14 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.movement()
-        #^this calls the movement method under
+        #^this calls the movement method which is under this method
+        self.animate()
+        # ^calling the animation method
         self.rect.x += self.x_change
+        # call the collision between these two lines of code
+        self.collide_blocks('x')
         self.rect.y += self.y_change #temp variable, add that to the coordinates of a player in update method
+        self.collide_blocks('y')
         self.x_change = 0
         self.y_change = 0
 
@@ -92,6 +101,88 @@ class Player(pygame.sprite.Sprite):
             self.y_change += PLAYER_SPEED
             self.facing = 'down'
 
+# COLLISION DETECTION
+    def collide_blocks(self, direction):
+        if direction == "x":
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
+            # ^checking whether the rect of one sprite is inside the rect of another sprite/comparing character sprite to block sprites. last param checks if you want to delete the sprite so its false bc we dont want the sprite to be deleted when it collides
+            if hits:
+                if self.x_change > 0:
+                # ^we're moving right bc the x-axis is increasing!
+                    self.rect.x = hits[0].rect.left - self.rect.width
+                    # taking the top left corner and matching it up with the block sprite but then the '- self.rect.width' would push it back so it lines up next to the block sprite rather than overlap it
+                if self.x_change < 0:
+                # ^we're moving left
+                    self.rect.x = hits[0].rect.right
+                    # hits[0] - the wall were colliding with 
+        if direction == "y":
+            hits = pygame.sprite.spritecollide(self, self.game.blocks, False)
+            if hits:
+                if self.y_change > 0: 
+                    # going down
+                    self.rect.y = hits[0].rect.top - self.rect.height
+                if self.y_change < 0:
+                    self.rect.y = hits[0].rect.bottom
+    # ANIMATION
+    def animate(self):
+        down_animations = [self.game.character_spritesheet.get_sprite(85, 8, self.width, self.height), 
+                            self.game.character_spritesheet.get_sprite(130, 7, self.width, self.height),
+                            self.game.character_spritesheet.get_sprite(170, 4, self.width, self.height)]
+
+        up_animations = [self.game.character_spritesheet.get_sprite(89, 93, self.width, self.height), 
+                            self.game.character_spritesheet.get_sprite(129, 94, self.width, self.height),
+                            self.game.character_spritesheet.get_sprite(169, 92, self.width, self.height)]
+
+        left_animations = [self.game.character_spritesheet.get_sprite(86, 52, self.width, self.height), 
+                            self.game.character_spritesheet.get_sprite(127, 50, self.width, self.height),
+                            self.game.character_spritesheet.get_sprite(246, 50, self.width, self.height)]
+
+        right_animations = [self.game.character2_spritesheet.get_sprite(334, 50, self.width, self.height), 
+                            self.game.character2_spritesheet.get_sprite(293, 51, self.width, self.height),
+                            self.game.character2_spritesheet.get_sprite(176, 50, self.width, self.height)]
+        if self.facing == 'down':
+            if self.y_change == 0:
+                self.image = self.game.character_spritesheet.get_sprite(85, 8, self.width, self.height)
+            # ^stand still/wont actually animate so need to put in self.y_change code
+                # if were standing still, set to static image. if y_change isnt 0 = we're moving
+            else: 
+                self.image = down_animations[math.floor(self.animation_loop)]
+                # self.animation_loop inside math.floor = index which is 1 (choosing the second out of the 3) -> index 1
+                self.animation_loop += 0.1
+                # reaching 1,2, or 3 for every 10 frames; every 10 frames is going to change the animation loop 
+                if self.animation_loop >=3:
+                    # set it back to one bc we only have 3 images in each animation list
+                    # adding 0.1 to math.floor each time and eventually will reach 2 and then change index of the math.floor which then reaches 3 and then we set it back to index 0 
+                    self.animation_loop = 1
+        if self.facing == 'up':
+            if self.y_change == 0:
+                self.game.character_spritesheet.get_sprite(89, 93, self.width, self.height)
+            else:
+                self.image = up_animations[math.floor(self.animation_loop)]
+                self.animation_loop += 0.1
+                if self.animation_loop >=3:
+                    self.animation_loop = 1
+
+        if self.facing == 'left':
+            if self.x_change == 0:
+                self.game.character_spritesheet.get_sprite(86, 52, self.width, self.height)
+            else:
+                self.image = left_animations[math.floor(self.animation_loop)]
+                self.animation_loop += 0.1
+                if self.animation_loop >=3:
+                    self.animation_loop = 1
+                    
+        if self.facing == 'right':
+            if self.x_change == 0:
+                self.game.character2_spritesheet.get_sprite(334, 50, self.width, self.height)
+            else:
+                self.image = right_animations[math.floor(self.animation_loop)]
+                self.animation_loop += 0.1
+                if self.animation_loop >=3:
+                    self.animation_loop = 1
+                
+
+# SPRITE SHEET
 class Block(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
         self.game = game
@@ -101,9 +192,9 @@ class Block(pygame.sprite.Sprite):
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.width = TILESIZE
-        self.height = TILESIZE
+        # self.height = TILESIZE
         # a square with a width and height of 32 pixels 
-        self.height_two = HEIGHTSIZE
+        self.height = HEIGHTSIZE
 
         # self.image = pygame.Surface([self.width, self.height])
         # self.image.fill(BLUE)
@@ -112,7 +203,7 @@ class Block(pygame.sprite.Sprite):
         # attempt at adding different parts of an image into the same block
         # self.image = self.game.terrain_spritesheet.get_sprite("A", 966, 1396, self.width, self.height_two)
 
-        self.image = self.game.silver_spritesheet.get_sprite(201, 488, self.width, self.height_two)
+        self.image = self.game.silver_spritesheet.get_sprite(201, 488, self.width, self.height)
         # self.image = self.game.terrain_spritesheet.get_sprite(201, 488, self.width, self.height_two)
         # self.image = self.game.terrain_spritesheet.get_sprite(1310, 675, self.width, self.height_two)
 
@@ -134,8 +225,8 @@ class Ground(pygame.sprite.Sprite):
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.width = TILESIZE
-        self.height = TILESIZE
-        self.height_two = HEIGHTSIZE
+        # self.height = TILESIZE
+        self.height = HEIGHTSIZE
 
         # self.image = self.game.terrain_spritesheet.get_sprite(893, 290, self.width, self.height)
         self.image = self.game.terrain_spritesheet.get_sprite(507, 618, self.width, self.height)

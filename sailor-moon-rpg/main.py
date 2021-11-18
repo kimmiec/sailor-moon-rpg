@@ -22,8 +22,14 @@ class Game: #--> the main class
         # load in sprite sheets
         self.character_spritesheet = Spritesheet('imgs/sailormoon4.png')
         # Spritesheet = object
+        self.character2_spritesheet = Spritesheet('imgs/sailormoon4flip.png')
+        # BLOCKS
         self.silver_spritesheet = Spritesheet('imgs/Silver_Millennium_Destroyed.png')
         self.terrain_spritesheet = Spritesheet('imgs/terrain2.png')
+        # VILLAINS
+        self.enemies_spritesheet = Spritesheet('imgs/sailormoon-villain.gif')
+        self.villains_spritesheet = Spritesheet('imgs/sailormoon-villainflip.gif')
+
 
 
     def createTilemap(self):
