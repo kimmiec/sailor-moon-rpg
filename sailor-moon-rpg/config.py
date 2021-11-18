@@ -4,11 +4,13 @@ TILESIZE = 32
 HEIGHTSIZE = 40
 FPS = 60
 
-PLAYER_LAYER = 3
+PLAYER_LAYER = 4
+ENEMY_LAYER = 3
 BLOCK_LAYER = 2
 GROUND_LAYER = 1
 
 PLAYER_SPEED = 2
+ENEMY_SPEED = 1
 
 GOLD = (255,215,0)
 BLACK = (0,0,0)
@@ -23,16 +25,16 @@ BLUE = (0,0, 255)
 tilemap = [
     'BBBBBBBBBBBBBBBBBBBB',
     'B..................B',
+    'B........Z.........B',
     'B..................B',
+    'B....BBB....F......B',
+    'B...........G......B',
+    'B........P..H......B',
     'B..................B',
-    'B....BBB....B......B',
-    'B...........B......B',
-    'B........P..B......B',
-    'B..................B',
-    'B..................B',
-    'B.......BBB........B',
+    'B...............J..B',
+    'B.......DAC........B',
     'B.........B........B',
-    'B.........B........B',
+    'B...Q.....B........B',
     'B..................B',
     'B..................B',
     'BBBBBBBBBBBBBBBBBBBB',

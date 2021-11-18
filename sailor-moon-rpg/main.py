@@ -38,12 +38,29 @@ class Game: #--> the main class
             #print(i, row) not only getting the content of the list but also the position
             for j, column in enumerate(row):
                 Ground(self, j ,i)
-                # if column == "A":
-                #     Block(self, j, i)
+                # BLOCKS
+                if column == "A":
+                    Block2(self, j, i)
                 if column == "B":
                     Block(self, j, i) #j = x position / i = y position
-                # if column == "C":
-                #     Player(self, j, i)
+                if column == "C":
+                    Block3(self, j, i)
+                if column == "D":
+                    Block4(self, j, i)
+                if column == "F":
+                    Block5(self, j, i)
+                if column == "G":
+                    Block6(self, j, i)
+                if column == "H":
+                    Block7(self, j, i)
+                # ENEMIES
+                if column == "Z":
+                    Enemy(self, j, i)
+                if column == "J":
+                    Enemy2(self, j, i)
+                if column == "Q":
+                    Enemy3(self, j, i)
+                # PLAYER
                 if column == "P":
                     Player(self, j, i)
 
