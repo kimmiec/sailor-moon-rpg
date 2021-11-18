@@ -18,13 +18,26 @@ class Game: #--> the main class
         self.running = True #<- just a boolean that is used when we want to stop playing the game
     
         #create multiple walls/create a method bc writing out one by one for each block is inefficent 
+
+        # load in sprite sheets
+        self.character_spritesheet = Spritesheet('imgs/sailormoon4.png')
+        # Spritesheet = object
+        self.silver_spritesheet = Spritesheet('imgs/Silver_Millennium_Destroyed.png')
+        self.terrain_spritesheet = Spritesheet('imgs/terrain2.png')
+
+
     def createTilemap(self):
         #iterate thru every row/column to see if its a 'B', 'P' or a '.'
         for i, row in enumerate(tilemap): #enumerate - 2 values (i, row) i -> the position of the list/row -> value of the list 
             #print(i, row) not only getting the content of the list but also the position
             for j, column in enumerate(row):
+                Ground(self, j ,i)
+                # if column == "A":
+                #     Block(self, j, i)
                 if column == "B":
                     Block(self, j, i) #j = x position / i = y position
+                # if column == "C":
+                #     Player(self, j, i)
                 if column == "P":
                     Player(self, j, i)
 
