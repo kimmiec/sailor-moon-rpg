@@ -25,6 +25,8 @@ CRYSTAL = (124,195,241)
 LIGHT_CRYSTAL = (219,240,251)
 # RED = (248,135,132)
 RED = (184,0,0)
+PURPLE = (205,199,247)
+SILVER = (186,217,248)
 
 
 #has rows and columns - grid. height = 480/tilesize = 32 = 15 rows

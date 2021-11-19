@@ -646,7 +646,7 @@ class Button:
         self.rect = self.image.get_rect()
         # pretty much a hit box of the button
 
-        self.rect.x - self.x
+        self.rect.x = self.x
         self.rect.y = self.y
 
         self.text = self.font.render(self.content, True, self.fg)

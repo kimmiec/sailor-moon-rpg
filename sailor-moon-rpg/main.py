@@ -33,12 +33,15 @@ class Game: #--> the main class
         self.enemies_spritesheet = Spritesheet('imgs/sailormoon-villain.gif')
         self.villains_spritesheet = Spritesheet('imgs/sailormoon-villainflip.gif')
         # BACKGROUND
-        self.intro_background = pygame.image.load('imgs/introbg3a.jpg')
+        self.intro_background = pygame.image.load('imgs/introbg3.jpg')
+        # self.intro_background = pygame.image.load('imgs/introbg3a.jpg')
         # self.intro_background = pygame.transform.scale(self.intro_background, (640,480), (0,0))
         # self.rect = self.intro_background.get_rect()
         #     self.rect = self.rect.move((30,30))
         #     self.screen.blit(self.intro_background, self.rect)
         #     self.screen = pygame.display.set_mode((640,480))
+        self.icon = pygame.image.load('imgs/star3.png')
+        self.icon.set_colorkey(WHITE)
         
 
 
@@ -127,19 +130,34 @@ class Game: #--> the main class
             #^ update the game to make sure its not a static image
             self.draw()
             #^display all the sprites onto our screen
-        self.running = False
+        # self.running = False
+        # ^want to take this out now bc when we hit a game over sequence, we dont want the game to just quit
+        # once we collide with an enemy, we get out of this loop above and go to the game over sequence
     def game_over(self):
-        pass
+        text = self.font.render('Game Over', True, RED)
+        text_rect = text.get_rect(center=(WIN_WIDTH/2, WIN_HEIGHT/2))
+        # get rectangle from the text object/param ^ centers text in the middle of the screen
+
+        restart_button = Button(10, WIN_HEIGHT - 60, 120, 50, SILVER, PURPLE, 'Restart', 32)
+
+        # want to get everything (sprites) off the screen now when the game over screen displays 
+        
+
     def intro_screen(self):
         intro = True
 
         title = self.font.render('Sailor Moon', True, MOON)
         # rendering the self.font from line 21 above. title, antialiasing, font color
-        title_rect = title.get_rect(x=10, y=200)
+        title_rect = title.get_rect(x=350, y=200)
         # get the rect from the title and position it with the x and y coordinates/(x=350, y=200)
 
-        play_button = Button(10, 280, 100, 50, PINK, LIGHT_CRYSTAL, 'Play', 32)
+        # title_rect = title.get_rect(x=10, y=200)
+        # flipped image ^^^
+
+        play_button = Button(420, 280, 100, 50, PINK, LIGHT_CRYSTAL, 'Play', 32)
         # x, y, width, height, fg, bg, text, fontsize
+        # play_button = Button(10, 280, 100, 50, PINK, LIGHT_CRYSTAL, 'Play', 32)
+        # flipped image ^^^
 
         while intro:
             for event in pygame.event.get():
@@ -155,8 +173,11 @@ class Game: #--> the main class
             if play_button.is_pressed(mouse_pos, mouse_pressed):
                 intro = False
             # display bg
-            self.screen.blit(self.intro_background, (-120, -260))
+            self.screen.blit(self.intro_background, (-62, -260))
             # on the screen, gonna drawa the bg and display at 0,0/(-62,-225)
+            # self.screen.blit(self.intro_background, (-120, -260))
+            # flipped image ^
+            self.screen.blit(self.icon, (399,195))
             self.screen.blit(title, title_rect)
             # display title
             self.screen.blit(play_button.image, play_button.rect)
