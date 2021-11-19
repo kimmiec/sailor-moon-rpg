@@ -15,6 +15,16 @@ ENEMY_SPEED = 1
 GOLD = (255,215,0)
 BLACK = (0,0,0)
 BLUE = (0,0, 255)
+# SAILOR MOON THEME COLORS
+WHITE = (255,255,255)
+YELLOW = (250,241,114)
+# MOON = (254,252,215)
+MOON = (250,240,117)
+PINK = (254,163,220)
+CRYSTAL = (124,195,241)
+LIGHT_CRYSTAL = (219,240,251)
+# RED = (248,135,132)
+RED = (184,0,0)
 
 
 #has rows and columns - grid. height = 480/tilesize = 32 = 15 rows

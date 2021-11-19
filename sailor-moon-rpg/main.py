@@ -16,6 +16,9 @@ class Game: #--> the main class
         #^sets the framerate of the game; framerate: how many times the game updates per sec
         # self.font = pygame.font.Font('Arial', 32)
         self.running = True #<- just a boolean that is used when we want to stop playing the game
+
+        # import font for intro screen
+        self.font = pygame.font.Font('Shardee.ttf', 64)
     
         #create multiple walls/create a method bc writing out one by one for each block is inefficent 
 
@@ -29,6 +32,14 @@ class Game: #--> the main class
         # VILLAINS
         self.enemies_spritesheet = Spritesheet('imgs/sailormoon-villain.gif')
         self.villains_spritesheet = Spritesheet('imgs/sailormoon-villainflip.gif')
+        # BACKGROUND
+        self.intro_background = pygame.image.load('imgs/introbg3a.jpg')
+        # self.intro_background = pygame.transform.scale(self.intro_background, (640,480), (0,0))
+        # self.rect = self.intro_background.get_rect()
+        #     self.rect = self.rect.move((30,30))
+        #     self.screen.blit(self.intro_background, self.rect)
+        #     self.screen = pygame.display.set_mode((640,480))
+        
 
 
 
@@ -120,7 +131,39 @@ class Game: #--> the main class
     def game_over(self):
         pass
     def intro_screen(self):
-        pass
+        intro = True
+
+        title = self.font.render('Sailor Moon', True, MOON)
+        # rendering the self.font from line 21 above. title, antialiasing, font color
+        title_rect = title.get_rect(x=10, y=200)
+        # get the rect from the title and position it with the x and y coordinates/(x=350, y=200)
+
+        play_button = Button(10, 280, 100, 50, PINK, LIGHT_CRYSTAL, 'Play', 32)
+        # x, y, width, height, fg, bg, text, fontsize
+
+        while intro:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    intro = False
+                    self.running = False
+                    # ^when this loop is broken out of, it'll move on to g.new which is start a new game
+            mouse_pos = pygame.mouse.get_pos()
+            # grabs the position of the mouse on the screen
+            mouse_pressed = pygame.mouse.get_pressed()
+            # return whenever theh mouse is clicked and returns a list. if the first item in the list is a left click button, the sec is the right click button and the 3rd is the middle mouse wheel. thats why in the sprites file, we wrote pressed[0], to check that we have a left click button
+
+            if play_button.is_pressed(mouse_pos, mouse_pressed):
+                intro = False
+            # display bg
+            self.screen.blit(self.intro_background, (-120, -260))
+            # on the screen, gonna drawa the bg and display at 0,0/(-62,-225)
+            self.screen.blit(title, title_rect)
+            # display title
+            self.screen.blit(play_button.image, play_button.rect)
+            # displaying the play button image at the play button rect
+            self.clock.tick(FPS)
+            # update the game at 60 frames/sec
+            pygame.display.update()
 
 # need to turn this class into an object
 g = Game()

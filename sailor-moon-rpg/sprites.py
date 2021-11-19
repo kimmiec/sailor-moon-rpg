@@ -624,6 +624,89 @@ class Ground(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+# BUTTON - INTRO SCREEN
+class Button:
+    # does not need inherit from a pygame sprite so it will be its own class
+    def __init__(self, x, y, width, height, fg, bg, content, fontsize):
+        # content = the text itself/ fg = foreground/ bg = background
+        self.font = pygame.font.Font('Shardee.ttf', fontsize)
+        self.content = content
+
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+        self.fg = fg
+        self.bg = bg
+
+        self.image = pygame.Surface((self.width, self.height))
+        # creating a pygame surface which is a rectangle
+        self.image.fill(self.bg)
+        self.rect = self.image.get_rect()
+        # pretty much a hit box of the button
+
+        self.rect.x - self.x
+        self.rect.y = self.y
+
+        self.text = self.font.render(self.content, True, self.fg)
+        # call the self.font and render it/ 2nd param,anti-aliasing, do we want it on or off? it means whether the font will be smooth or not so typically yes we do want it on so --> True
+        # self.fg = color of the text
+        self.text_rect = self.text.get_rect(center=(self.width/2, self.height/2))
+        # position of the text. width and height to make sure its centered in the middle of the button
+        self.image.blit(self.text, self.text_rect)
+        # render the image, render the text, and throwing the text onto the image
+    
+    # HOVER ANIMATION
+    # padding = 25
+    # outline =2
+
+    # def __init__(self, surface, font, text, color1, color2, x, y):
+    #     self.hovered = False
+    #     self.surface = surface
+    #     self.font = font
+
+    #     self.text = self.font.render(text, 1, color1)
+    #     if x == None:
+    #         self.x = (self.surface.get_width()-self.text.get_width())/2
+    #     else:
+    #         self.x = x
+    #     if y == None: 
+    #         self.y = (self.surface.get_height()-self.text.get_height())/2
+    #     else:
+    #         self.y = y
+    #     self.width = self.text.get_width()
+    #     self.height = self.text.get_height()
+    #     self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+
+    #     self.hovered_text = self.font.render(text, 1, color2)
+    #     self.hovered_x = self.x - self.padding/2
+    #     self.hovered_y = self.y - self.padding/2
+    #     self.hovered_width = self.text.get_width() + self.padding       
+    #     self.hovered_height = self.text.get_height() + self.padding
+    #     self.hovered_rect = pygame.Rect(self.hovered_x, self.hovered_y, self.hovered_width, self.hovered_y)
+    
+    # def render(self):
+    #     if self.hovered:
+    #         pygame.draw.rect(self.surface, GOLD, self.hovered_rect)
+    #         self.surface.blit(self.hovered_text, (self.hovered_x + (self.hovered_width-self.hovered_text.get_width())/2, self.hovered_y + (self.hovered_height - self.hovered_text.get_height())/2))
+    #     else:
+    #         pygame.draw.rect(self.surface, GOLD, self.hovered_rect)
+    #         pygame.draw.rect(self.surface, CRYSTAL, (self.hovered_x + self.outline, self.hovered_y + self.outline, self.hovered_width - self.outline*2, self.hovered_height - self.outline*2))
+    #         self.surface.blit(self.x + (self.width - self.text.get_width())/2, self.y + (self.height - self.text.get_height())/2)
+
+    def is_pressed(self, pos, pressed):
+        # get the position[pos] of the mouse
+        if self.rect.collidepoint(pos):
+            # check if the mouse is colliding with the button
+            if pressed[0]:
+                # check if we pressed (clicked on) it or not
+                return True
+                # ^ if it was pressed, then return true
+            return False
+            # ^ if we havent, return false
+        return False
+
 
 
         
