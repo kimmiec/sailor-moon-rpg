@@ -32,7 +32,10 @@ class Game: #--> the main class
         # VILLAINS
         self.enemies_spritesheet = Spritesheet('imgs/sailormoon-villain.gif')
         self.villains_spritesheet = Spritesheet('imgs/sailormoon-villainflip.gif')
-        # BACKGROUND
+        # ATTACK
+        self.attack_spritesheet = Spritesheet('imgs/sailormoon4.png')
+        self.attack2_spritesheet = Spritesheet('imgs/sailormoon4flip.png')
+        # BACKGROUNDS
         self.intro_background = pygame.image.load('imgs/introbg3.jpg')
         # self.intro_background = pygame.image.load('imgs/introbg3a.jpg')
         # self.intro_background = pygame.transform.scale(self.intro_background, (640,480), (0,0))
@@ -40,6 +43,7 @@ class Game: #--> the main class
         #     self.rect = self.rect.move((30,30))
         #     self.screen.blit(self.intro_background, self.rect)
         #     self.screen = pygame.display.set_mode((640,480))
+        self.go_background = pygame.image.load('imgs/gameoverbg2.jpg')
         self.icon = pygame.image.load('imgs/star3.png')
         self.icon.set_colorkey(WHITE)
         
@@ -134,14 +138,38 @@ class Game: #--> the main class
         # ^want to take this out now bc when we hit a game over sequence, we dont want the game to just quit
         # once we collide with an enemy, we get out of this loop above and go to the game over sequence
     def game_over(self):
-        text = self.font.render('Game Over', True, RED)
+        text = self.font.render('Game Over', True, DARK_RED)
         text_rect = text.get_rect(center=(WIN_WIDTH/2, WIN_HEIGHT/2))
         # get rectangle from the text object/param ^ centers text in the middle of the screen
 
-        restart_button = Button(10, WIN_HEIGHT - 60, 120, 50, SILVER, PURPLE, 'Restart', 32)
+        restart_button = Button(10, WIN_HEIGHT - 60, 120, 50, SILVER, DARK_PURPLE, 'Restart', 32)
 
         # want to get everything (sprites) off the screen now when the game over screen displays 
-        
+        for sprite in self.all_sprites:
+            sprite.kill()
+
+            # create an event loop
+        while self.running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                    # when it hits false, it will quit and exit aka quit the app
+
+            mouse_pos = pygame.mouse.get_pos()
+            mouse_pressed = pygame.mouse.get_pressed()
+
+            if restart_button.is_pressed(mouse_pos, mouse_pressed):
+                self.new()
+                self.main()
+                # this will start a new game ^
+            
+            # display everything on the screen
+            self.screen.blit(self.go_background, (-40,-70))
+            self.screen.blit(text, text_rect)
+            self.screen.blit(restart_button.image, restart_button.rect)
+            self.clock.tick(FPS)
+            pygame.display.update()
+
 
     def intro_screen(self):
         intro = True
