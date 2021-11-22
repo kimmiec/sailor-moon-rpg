@@ -108,6 +108,7 @@ class Player(pygame.sprite.Sprite):
         hits = pygame.sprite.spritecollide(self, self.game.enemies, False)
         # false params - if you want to destroy enemies on impact, but we dont want that so false
         if hits:
+            self.animate2()
             # if we collide with any of the enemies do this
             self.kill()
             # remove player from the all sprites group so they wont appear on the screen anymore
@@ -194,6 +195,35 @@ class Player(pygame.sprite.Sprite):
                 self.animation_loop += 0.1
                 if self.animation_loop >=3:
                     self.animation_loop = 1
+# death animation
+    # def animate2(self):
+    #     left_animations = [self.game.character_spritesheet.get_sprite(126, 138, self.width, self.height),
+    #     self.game.character_spritesheet.get_sprite(203, 152, self.width, self.height)]
+    #     right_animations = [self.game.character_spritesheet.get_sprite(359, 4, self.width, self.height),
+    #     self.game.character_spritesheet.get_sprite(400, 59, self.width, self.height)]
+
+    #     if self.facing == 'left':
+    #         self.image = left_animations[math.floor(self.animation_loop)]
+    #         self.animation_loop += 0.2
+    #         if self.animation_loop >= 2:
+    #             self.animation_loop = 1
+    #     if self.facing == 'right':
+    #         self.image = right_animations[math.floor(self.animation_loop)]
+    #         self.animation_loop += 0.2
+    #         if self.animation_loop >= 2:
+    #             self.animation_loop = 1
+    #     if self.facing == 'down':
+    #         self.image = left_animations[math.floor(self.animation_loop)]
+    #         self.animation_loop += 0.2
+    #         if self.animation_loop >= 2:
+    #             self.animation_loop = 1
+    #     if self.facing == 'up':
+    #         self.image = left_animations[math.floor(self.animation_loop)]
+    #         self.animation_loop += 0.2
+    #         if self.animation_loop >= 2:
+    #             self.animation_loop = 1
+
+
 # ENEMY/VILLAINS
 # JADEITE
 class Enemy(pygame.sprite.Sprite):
@@ -713,6 +743,10 @@ class Attack(pygame.sprite.Sprite):
     # inheriting from the pygame sprite
     def __init__ (self, game, x, y):
         self.game = game
+        self._layer = PLAYER_LAYER
+        self.groups = self.game.all_sprites, self.game.attacks
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        # will call the init function for the pygame.sprite.Sprite. add attack class to the all_sprites group and the attacks group
         self.x = x
         self.y = y
         self.width = TILESIZE  
@@ -720,77 +754,64 @@ class Attack(pygame.sprite.Sprite):
 
         self.animation_loop = 0 
 
-        self.image = self.game.attack_spritesheet.get_sprite(0,0, self.width, self.height)
+        self.image = self.game.attack_spritesheet.get_sprite(111, 476, self.width, self.height)
 
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
 
-        def update(self):
-            self.animate()
-            self.collide()
-        
-        def collide(self):
-            hits = pygame.sprite.spritecollide(self, self.game.enemies, True)
-            # self.game.enemies = checking for collision b/t attack animation and the enemies
-            # true = bc if it there is a collision, then we want to kill the enemies/if it was false, then the enemies wont die
-        
-        def animate(self):
-            direction = self.game.player.facing
+    def update(self):
+        self.animate()
+        self.collide()
+    
+    def collide(self):
+        hits = pygame.sprite.spritecollide(self, self.game.enemies, True)
+        # self.game.enemies = checking for collision b/t attack animation and the enemies
+        # true = bc if it there is a collision, then we want to kill the enemies/if it was false, then the enemies wont die
+    
+    def animate(self):
+        direction = self.game.player.facing
 
-            down_animations = [self.game.attack_spritesheet.get_sprite(131, 484, self.width, self.height), 
-                                self.game.attack_spritesheet.get_sprite(146, 479, self.width, self.height),
-                                self.game.attack_spritesheet.get_sprite(183, 402, self.width, self.height)]
+        down_animations = [self.game.attack_spritesheet.get_sprite(111, 476, self.width, self.height), 
+                            self.game.attack_spritesheet.get_sprite(144, 479, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(173, 471, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(216, 457, self.width, self.height)]
 
-            up_animations = [self.game.attack_spritesheet.get_sprite(131, 480, self.width, self.height), 
-                                self.game.attack_spritesheet.get_sprite(146, 479, self.width, self.height),
-                                self.game.attack_spritesheet.get_sprite(169, 92, self.width, self.height)]
+        up_animations = [self.game.attack_spritesheet.get_sprite(111, 476, self.width, self.height), 
+                            self.game.attack_spritesheet.get_sprite(144, 479, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(173, 471, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(180, 405, self.width, self.height)]
 
-            left_animations = [self.game.attack_spritesheet.get_sprite(131, 480, self.width, self.height), 
-                                self.game.attack_spritesheet.get_sprite(146, 479, self.width, self.height),
-                                self.game.attack_spritesheet.get_sprite(246, 50, self.width, self.height)]
+        left_animations = [self.game.attack_spritesheet.get_sprite(111, 476, self.width, self.height), 
+                            self.game.attack_spritesheet.get_sprite(144, 479, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(173, 471, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(173, 355, self.width, self.height)]
 
-            right_animations = [self.game.attack_spritesheet.get_sprite(131, 480, self.width, self.height), 
-                                self.game.attack_spritesheet.get_sprite(146, 479, self.width, self.height),
-                                self.game.attack_spritesheet.get_sprite(176, 50, self.width, self.height)]
-            if self.facing == 'down':
-                if self.y_change == 0:
-                    self.image = self.game.attack_spritesheet.get_sprite(131, 484, self.width, self.height)
-                # ^stand still/wont actually animate so need to put in self.y_change code
-                    # if were standing still, set to static image. if y_change isnt 0 = we're moving
-                else: 
-                    self.image = down_animations[math.floor(self.animation_loop)]
-                    # self.animation_loop inside math.floor = index which is 1 (choosing the second out of the 3) -> index 1
-                    self.animation_loop += 0.1
-                    # reaching 1,2, or 3 for every 10 frames; every 10 frames is going to change the animation loop 
-                    if self.animation_loop >=3:
-                        # set it back to one bc we only have 3 images in each animation list
-                        # adding 0.1 to math.floor each time and eventually will reach 2 and then change index of the math.floor which then reaches 3 and then we set it back to index 0 
-                        self.animation_loop = 1
-            # if self.facing == 'up':
-            #     if self.y_change == 0:
-            #         self.game.attack_spritesheet.get_sprite(131, 480, self.width, self.height)
-            #     else:
-            #         self.image = up_animations[math.floor(self.animation_loop)]
-            #         self.animation_loop += 0.1
-            #         if self.animation_loop >=3:
-            #             self.animation_loop = 1
-
-            # if self.facing == 'left':
-            #     if self.x_change == 0:
-            #         self.game.attack_spritesheet.get_sprite(131, 480, self.width, self.height)
-            #     else:
-            #         self.image = left_animations[math.floor(self.animation_loop)]
-            #         self.animation_loop += 0.1
-            #         if self.animation_loop >=3:
-            #             self.animation_loop = 1
-                        
-            # if self.facing == 'right':
-            #     if self.x_change == 0:
-            #         self.game.attack_spritesheet.get_sprite(131, 480, self.width, self.height)
-            #     else:
-            #         self.image = right_animations[math.floor(self.animation_loop)]
-            #         self.animation_loop += 0.1
-            #         if self.animation_loop >=3:
-            #             self.animation_loop = 1
+        right_animations = [self.game.attack_spritesheet.get_sprite(111, 476, self.width, self.height), 
+                            self.game.attack_spritesheet.get_sprite(144, 479, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(173, 471, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(171, 381, self.width, self.height)]
+        if direction == 'up':
+            self.image = up_animations[math.floor(self.animation_loop)]
+            # if we're facing up, we're setting it to an image in the up animation. index = self.animation_loop but using math.floor 
+            self.animation_loop += 0.5
+            # add 0.5 = 1.5, math.floor then rounds down to the nearest number and you get it, 1 which will then go to the animation of index 1 and repeat. adding 0.5, we're going to be changing the image of the attack for every 2 frames.
+            if self.animation_loop >= 4:
+            # if the animation loop is greater than 4, then we'll kill the sprites and they will disappear
+                self.kill()
+        if direction == 'down':
+            self.image = down_animations[math.floor(self.animation_loop)]
+            self.animation_loop += 0.5 
+            if self.animation_loop >= 4:
+                self.kill()
+        if direction == 'left':
+            self.image = left_animations[math.floor(self.animation_loop)]
+            self.animation_loop += 0.5
+            if self.animation_loop >= 4:
+                self.kill()
+        if direction == 'right':
+            self.image = right_animations[math.floor(self.animation_loop)]
+            self.animation_loop += 0.5
+            if self.animation_loop >= 4:
+                self.kill()
 

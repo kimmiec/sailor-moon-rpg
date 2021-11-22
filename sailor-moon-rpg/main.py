@@ -34,7 +34,6 @@ class Game: #--> the main class
         self.villains_spritesheet = Spritesheet('imgs/sailormoon-villainflip.gif')
         # ATTACK
         self.attack_spritesheet = Spritesheet('imgs/sailormoon4.png')
-        self.attack2_spritesheet = Spritesheet('imgs/sailormoon4flip.png')
         # BACKGROUNDS
         self.intro_background = pygame.image.load('imgs/introbg3.jpg')
         # self.intro_background = pygame.image.load('imgs/introbg3a.jpg')
@@ -80,7 +79,8 @@ class Game: #--> the main class
                     Enemy3(self, j, i)
                 # PLAYER
                 if column == "P":
-                    Player(self, j, i)
+                    self.player = Player(self, j, i)
+                # creating a player object here but not actually assigning it to a variable
 
         #method = name - its called whenever we run the game; set a part all our variables for the game
     def new(self):
@@ -109,6 +109,22 @@ class Game: #--> the main class
                 #pygame.quit = when we close the button, checks to see if we closed the game and if it does, then we stop playing and running
                 self.playing = False
                 self.running = False
+
+        # check if the spacebar has been pressed
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    # want to spawn the attack animation in front of the player rather than on the player
+                    if self.player.facing == 'up':
+                        Attack(self, self.player.rect.x, self.player.rect.y - TILESIZE)
+                        # rect.x & rect.y = the coordinates of the player/ - tilesize = will be above the player
+                    if self.player.facing == 'down':
+                        Attack(self, self.player.rect.x, self.player.rect.y + TILESIZE)
+                        # add tilesize so the animation will be below the player
+                    if self.player.facing == 'left':
+                        Attack(self, self.player.rect.x - TILESIZE, self.player.rect.y)
+                    if self.player.facing == 'right':
+                        Attack(self, self.player.rect.x + TILESIZE, self.player.rect.y)
+                        # add to the x axis tilesize bc left and right
 
     def update(self):
         # game loop updates
