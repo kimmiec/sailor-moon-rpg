@@ -16,9 +16,17 @@ class Game: #--> the main class
         #^sets the framerate of the game; framerate: how many times the game updates per sec
         # self.font = pygame.font.Font('Arial', 32)
         self.running = True #<- just a boolean that is used when we want to stop playing the game
-
+        # background music
+        self.music = pygame.mixer.Sound('Moonlight.mp3')
+        self.music.play()
+        # to loop write 'loops = ' --> this tells pygame how often to loop this music [to loop forever write in -1]
         # import font for intro screen
         self.font = pygame.font.Font('Shardee.ttf', 64)
+
+        # import sound
+        self.effect = pygame.mixer.Sound('moonSE.mp3')
+        # to fix the volume for the sound effect:
+        self.effect.set_volume(0.5)
     
         #create multiple walls/create a method bc writing out one by one for each block is inefficent 
 
@@ -126,6 +134,7 @@ class Game: #--> the main class
                     if self.player.facing == 'right':
                         Attack(self, self.player.rect.x + TILESIZE, self.player.rect.y)
                         # add to the x axis tilesize bc left and right
+                    self.effect.play()
 
     def update(self):
         # game loop updates
