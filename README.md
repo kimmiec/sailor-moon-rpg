@@ -7,11 +7,12 @@ A game application where you can play as Sailor Moon to defeat the villains.
 
 ## Screenshots: 
 ### Intro
-![Sailor Moon Intro Page](imgs/image(1).png)
+![Sailor Moon Intro Page](https://user-images.githubusercontent.com/89497794/142810915-430e8e0a-3024-4110-8f7a-18afafb15f96.png)
 ### Gameplay
-![Sailor Moon Gameplay Page](imgs/image(2).png)
+![Sailor Moon Gameplay Page](https://user-images.githubusercontent.com/89497794/142810924-28653f7c-968a-4137-b913-97e191f39d0a.png)
 ### End
-![Sailor Moon End Page](imgs/image(3).png)
+![Sailor Moon End Page](https://user-images.githubusercontent.com/89497794/142810939-ce5295fd-8452-4781-93a1-359da5904d05.png)
+
 
 ## Getting Started:
 - To play the game, first clone down the code/file
