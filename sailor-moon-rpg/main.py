@@ -26,7 +26,7 @@ class Game: #--> the main class
         # import sound
         self.effect = pygame.mixer.Sound('moonSE.mp3')
         # to fix the volume for the sound effect:
-        self.effect.set_volume(0.5)
+        # self.effect.set_volume()
     
         #create multiple walls/create a method bc writing out one by one for each block is inefficent 
 
