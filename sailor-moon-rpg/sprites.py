@@ -749,7 +749,7 @@ class Attack(pygame.sprite.Sprite):
         # will call the init function for the pygame.sprite.Sprite. add attack class to the all_sprites group and the attacks group
         self.x = x
         self.y = y
-        self.width = TILESIZE  
+        self.width = WIDTHSIZE 
         self.height = HEIGHTSIZE
 
         self.animation_loop = 0 
@@ -776,24 +776,24 @@ class Attack(pygame.sprite.Sprite):
         direction = self.game.player.facing
 
         down_animations = [self.game.attack_spritesheet.get_sprite(111, 476, self.width, self.height), 
-                            self.game.attack_spritesheet.get_sprite(144, 479, self.width, self.height),
-                            self.game.attack_spritesheet.get_sprite(173, 471, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(139, 476, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(165, 468, self.width, self.height),
                             self.game.attack_spritesheet.get_sprite(216, 457, self.width, self.height)]
 
         up_animations = [self.game.attack_spritesheet.get_sprite(111, 476, self.width, self.height), 
-                            self.game.attack_spritesheet.get_sprite(144, 479, self.width, self.height),
-                            self.game.attack_spritesheet.get_sprite(173, 471, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(139, 476, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(165, 468, self.width, self.height),
                             self.game.attack_spritesheet.get_sprite(180, 405, self.width, self.height)]
 
         left_animations = [self.game.attack_spritesheet.get_sprite(111, 476, self.width, self.height), 
-                            self.game.attack_spritesheet.get_sprite(144, 479, self.width, self.height),
-                            self.game.attack_spritesheet.get_sprite(173, 471, self.width, self.height),
-                            self.game.attack_spritesheet.get_sprite(173, 355, self.width, self.height)]
+                            self.game.attack_spritesheet.get_sprite(139, 476, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(165, 468, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(109, 504, self.width, self.height)]
 
         right_animations = [self.game.attack_spritesheet.get_sprite(111, 476, self.width, self.height), 
-                            self.game.attack_spritesheet.get_sprite(144, 479, self.width, self.height),
-                            self.game.attack_spritesheet.get_sprite(173, 471, self.width, self.height),
-                            self.game.attack_spritesheet.get_sprite(171, 381, self.width, self.height)]
+                            self.game.attack_spritesheet.get_sprite(139, 476, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(165, 468, self.width, self.height),
+                            self.game.attack_spritesheet.get_sprite(167, 514, self.width, self.height)]
         if direction == 'up':
             self.image = up_animations[math.floor(self.animation_loop)]
             # if we're facing up, we're setting it to an image in the up animation. index = self.animation_loop but using math.floor 
