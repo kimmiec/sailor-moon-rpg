@@ -43,6 +43,7 @@ class Game: #--> the main class
         #     self.screen.blit(self.intro_background, self.rect)
         #     self.screen = pygame.display.set_mode((640,480))
         self.go_background = pygame.image.load('imgs/gameoverbg2.jpg')
+        self.win_background = pygame.image.load('imgs/introbg.jpg')
         self.icon = pygame.image.load('imgs/star3.png')
         self.icon.set_colorkey(WHITE)
         
@@ -186,6 +187,40 @@ class Game: #--> the main class
             self.clock.tick(FPS)
             pygame.display.update()
 
+    # def win_screen(self):
+    #     win = True
+
+    #     text = self.font.render('You Saved the World!', True, PINK)
+    #     text_rect = text.get_rect(center=(WIN_WIDTH/2, WIN_HEIGHT/2))
+
+    #     replay_button = Button(10, WIN_HEIGHT - 60, 120, 50, GOLD, CRYSTAL, 'Replay', 32)
+
+    #     for sprite in self.all_sprites:
+    #         sprite.kill()
+
+    #     while win:
+    #         for event in pygame.event.get():
+    #             if event.type == pygame.QUIT:
+    #                 win = False
+    #                 self.running = False
+    #             else:
+    #                 Enemy, Enemy2, Enemy3 == 0
+    #                 win = True
+    #                 self.running = False
+            
+    #         mouse_pos = pygame.mouse.get_pos()
+    #         mouse_pressed = pygame.mouse.get_pressed()
+
+    #         if replay_button.is_pressed(mouse_pos, mouse_pressed):
+    #             self.new()
+    #             self.main()
+            
+    #         self.screen.blit(self.win_background, (0,0))
+    #         self.screen.blit(text, text_rect)
+    #         self.screen.blit(replay_button.image, replay_button.rect)
+    #         self.clock.tick(FPS)
+    #         pygame.display.update()
+
 
     def intro_screen(self):
         intro = True
@@ -240,6 +275,7 @@ g.new()
 while g.running:
     g.main()
     #^when it runs, calls the main loop and once the loop stops, set the running to false and then break out of the loop then
+    # g.win_background()
     g.game_over()
 pygame.quit()
 # quit out of the game

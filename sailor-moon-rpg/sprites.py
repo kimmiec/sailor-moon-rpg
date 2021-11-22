@@ -108,7 +108,7 @@ class Player(pygame.sprite.Sprite):
         hits = pygame.sprite.spritecollide(self, self.game.enemies, False)
         # false params - if you want to destroy enemies on impact, but we dont want that so false
         if hits:
-            self.animate2()
+            # self.animate2()
             # if we collide with any of the enemies do this
             self.kill()
             # remove player from the all sprites group so they wont appear on the screen anymore
@@ -768,6 +768,9 @@ class Attack(pygame.sprite.Sprite):
         hits = pygame.sprite.spritecollide(self, self.game.enemies, True)
         # self.game.enemies = checking for collision b/t attack animation and the enemies
         # true = bc if it there is a collision, then we want to kill the enemies/if it was false, then the enemies wont die
+        # if hits: 
+        #     self.game.enemies == 0
+           
     
     def animate(self):
         direction = self.game.player.facing
