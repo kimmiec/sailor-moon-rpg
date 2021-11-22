@@ -1,4 +1,4 @@
-# SAILOR MOON RPG
+# SAILOR MOON 🌙 RPG
 A game application where you can play as Sailor Moon to defeat the villains.
 
 ## Technologies Used:
