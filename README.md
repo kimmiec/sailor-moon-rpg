@@ -17,16 +17,16 @@ A game application where you can play as Sailor Moon to defeat the villains.
 ## Getting Started:
 - To play the game, first clone down the code/file
 - To run the game, simply install pygame and run it in the terminal:
-  -Mac Users:
-    -python3 -m pip install -U pygame --user
-    -python3 main.py
-  -Window Users:
-    -py -m pip install -U pygame --user
-    -py main.py
-   -To test if it works, run:
-    -Mac Users: python3 -m pygame.examples.aliens
-    -Window Users: py -m pygame.examples.aliens
-      -For further info, go here: https://www.pygame.org/wiki/GettingStarted#Pygame%20Installation
+  - Mac Users:
+    - python3 -m pip install -U pygame --user
+    - python3 main.py
+  - Window Users:
+    - py -m pip install -U pygame --user
+    - py main.py
+   - To test if it works, run:
+    - Mac Users: python3 -m pygame.examples.aliens
+    - Window Users: py -m pygame.examples.aliens
+      - For further info, go here: https://www.pygame.org/wiki/GettingStarted#Pygame%20Installation
 - Once the window loads, click Play
 - To move around, simply use the arrow keys and to attack, use the spacebar
 - If you die, click Restart
